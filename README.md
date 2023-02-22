@@ -1,2 +1,2 @@
-# School_Project2
+# School_Project
 Created with CodeSandbox
