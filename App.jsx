@@ -1,6 +1,7 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Login from "./Login";
+import AddUser from "./AddUser";
 
 function App() {
   return (
@@ -11,5 +12,3 @@ function App() {
 }
 
 export default App;
-
-
