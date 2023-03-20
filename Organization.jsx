@@ -1,45 +1,63 @@
 import React, { useState } from "react";
+import AddOrganization from "./AddOrganization";
+import Homepage from "./Homepage";
 import Login from "./Login";
 import UserList from "./UserList";
-import Homepage from "./Homepage";
-
-
 
 function OrganizationList() {
-  const [inHome, setHome] = useState(false);
-  const [isUser, setUser] = useState(false);
   const [isOrganization, setOrganization] = useState(true);
+  const [isHome, setHome] = useState(false);
+  const [isUser, setUser] = useState(false);
+  const [isAddOrg, setAddOrg] = useState(false);
+  const [isLogin, setLogin] = useState(false);
 
-  const moveBackHome = () => {
-    setUser(false);
-    setOrganization(false);
+  const moveToHome = () => {
     setHome(true);
-    
-  }
+    setOrganization(false);
+    setUser(false);
+    setLogin(false);
+  };
+
+  const moveToOrganization = () => {
+    setOrganization(true);
+    setUser(false);
+    setHome(false);
+  };
 
   const moveToUser = () => {
     setUser(true);
+    setOrganization(false);
+    setHome(false);
   };
 
-  // const moveToOrganization = () => {
-  //   setOrganization(true);
-  // };
+  const moveToAddOrganization = () => {
+    setAddOrg(true);
+    setUser(false);
+    setOrganization(false);
+    setHome(false);
+    setLogin(false);
+  };
 
   const logOff = () => {
+    setLogin(true);
     setHome(false);
     setOrganization(false);
-    setUser(false)
+    setUser(false);
   };
 
-  const homeOrg = () => {
+  const organizationHomePage = () => {
     return (
       <div className="container mt-5">
         <div className="row align-items-center">
           <div
-            className="col-3 bg-secondary border border-1 border-dark border-bottom-0 text-center align-self-start pb-5 pt-2"
+            className="col-3 bg-secondary border border-1 border-dark border-bottom-0 text-center align-self-start pt-2"
             style={{ "--bs-bg-opacity": ".5" }}
           >
-            <a className="navbar-brand" href="#Goes back to the Homepage" onClick={moveBackHome}>
+            <a
+              className="navbar-brand "
+              href="#Goes back to the Homepage"
+              onClick={moveToHome}
+            >
               <img
                 src="https://i.ibb.co/P9hkZY5/mediamodifier-cropped-image.png"
                 alt="logo"
@@ -54,18 +72,19 @@ function OrganizationList() {
           >
             <div className="row align-items-center">
               <div className="col-9">
-                <h1 className="display-6 text-center text-black">
-                  Property Assessment Pro (PAP) - List HOA
+                <h1 className="display-6 text-center text-black  ">
+                  Property Assessment Pro - List HOA
                 </h1>
               </div>
-              <div className="col-2 text-black">Dave Gibson</div>
+              <div className="col-2 text-black">
+                <p> Ayad Ismael </p>
+              </div>
               <div className="col-1">
                 <button
                   className="btn btn-primary btn-rou"
                   href="#Login Page"
                   role="button"
                   type="button"
-                  value="button"
                   style={{
                     "--bs-btn-padding-y": ".5rem",
                     "--bs-btn-padding-x": ".5rem",
@@ -78,7 +97,7 @@ function OrganizationList() {
                     width="1.5em"
                     height="1.5em"
                     fill="currentColor"
-                    className="bi bi-power"
+                    class="bi bi-power"
                     viewBox="0 0 16 16"
                   >
                     <path d="M7.5 1v7h1V1h-1z" />
@@ -91,88 +110,79 @@ function OrganizationList() {
         </div>
         <div className="row">
           <div
-            className="col-3 bg-secondary border border-1 border-dark border-top-0 border-bottom-0"
+            className="col-3 bg-secondary border border-1 border-dark border-top-0 border-bottom-0 "
             style={{ "--bs-bg-opacity": ".5" }}
           >
-            <span className="userRole text-black">Assessment Response</span>
-              <div className="row ">
-                <a href="#" className="link-dark px-5">
-                  List Assessment Response
-                </a>
-                <a href="#" className="link-dark px-5 text-nowrap">
-                  List Quarterly Assessment
-                </a>
-              </div>
-              <br/>
-              <span className="userRole text-black">AssessmentManagement</span>
-              <div className="row ">
-                <a href="#" className="link-dark px-5">
-                  List Assessment 
-                </a>
-                {/* <a href="#" className="link-dark px-5 text-nowrap">
-                  List Quarterly Assessment
-                </a> */}
-              </div>
-          </div>
-          <br/>
-
-          <div className="row">
-            
-            <div
-              className="col-3 bg-secondary border border-1 border-dark border-top-0 border-bottom-0"
-              style={{ "--bs-bg-opacity": ".5" }}
-            >
-              <br/>
-              <span className="userRole text-black">Rank Judge</span>
-              <div className="row ">
-                <a href="#" className="link-dark px-5" >
-                  List Judge
-                </a>
-                {/* <a
-                  href="#"
-                  className="link-dark px-5 text-nowrap"
-                  onClick={moveToOrganization}
-                >
-                  List Organization
-                </a> */}
-              </div>
-                <br/>
-              <span className="userRole text-black">Administration</span>
-              <div className="row ">
-                <a href="#" className="link-dark px-5" onClick={moveToUser}>
-                  List User
-                </a>
-                
-                <a
-                href="#"className="link-dark px-5 text-nowrap">
-                  List HOA
-                </a>
-                <a
-                  href="#"
-                  className="link-dark px-5 text-nowrap">
-                  List Property
-                </a>
-                
-              </div>
-
-            </div>
-            <div
-              className="col-9 d-inline-flex"
-              style={{ height: "50vh", backgroundColor: "rgba(0,0,255,.1)" }}
-            >
-              ** HOA Information **
+            <div className="row my-5">
+              <span className="userRole text-black ">Assessment Response</span>
+              <a href="#" className="link-dark px-5">
+                List Assessment Response
+              </a>
+              <a
+                href="#"
+                className="link-dark px-5 text-nowrap"
+                style={{ marginRight: "10px" }}
+              >
+                List Quarterly Assessment
+              </a>
+              <span className="userRole text-black ">AssessmentManagement</span>
+              <a href="#" className="link-dark px-5 text-nowrap">
+                List Assessment
+              </a>
+              <span className="userRole text-black ">Rank Judge</span>
+              <a href="#" className="link-dark px-5 text-nowrap">
+                List Judge
+              </a>
+              <span className="userRole text-black ">Administration</span>
+              <a href="#" className="link-dark px-5 text-nowrap">
+                List User
+              </a>
+              <a href="#" className="link-dark px-5 text-nowrap">
+                List HOA
+              </a>
+              <a href="#" className="link-dark px-5 text-nowrap">
+                List Property
+              </a>
             </div>
           </div>
-          <div className="row justify-content-center">
-            <div
-              className="col-3 bg-secondary border border-1 border-dark border-top-0"
-              style={{ "--bs-bg-opacity": ".5" }}
-            ></div>
-            <div className="col-9 bg-white border border-1 border-dark border-start-0">
-              <h2 className="text-center fs-6 fw-light">
-                Copyright © 2022 PAP. All rights reserved.
-              </h2>
+          <div
+            className="col-9 border-end border-1 border-dark "
+            style={{ " height: 50vh; margin-top": " -1.7rem;" }}
+          >
+            <div className="row mt-2">
+              <div className="col text-center text-black fw-bold">
+                ** HOA Information **
+              </div>
             </div>
+          </div>
+        </div>
+        <div className="row justify-content-center">
+          <div
+            className="col-3 bg-secondary border border-1 border-dark border-top-0 "
+            style={{ "--bs-bg-opacity": ".5" }}
+          ></div>
+          <div className="col-9 bg-white border border-1 border-dark border-start-0 border-bottom-1">
+            <div className="bg-light">
+              <button
+                type="button"
+                className="btn btn-primary my-2 ms-2"
+                onClick={moveToAddOrganization}
+              >
+                Add
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div className="row justify-content-center">
+          <div
+            className="col-3 bg-secondary border border-1 border-dark border-top-0 "
+            style={{ "--bs-bg-opacity": ".5" }}
+          ></div>
+          <div className="col-9 bg-white border border-1 border-dark border-start-0 border-top-0">
+            <h2 className=" text-center fs-6 fw-light  ">
+              Copyright Â© 2022 PAP. All rights reserved.
+            </h2>
           </div>
         </div>
       </div>
@@ -180,9 +190,13 @@ function OrganizationList() {
   };
 
   return (
-    <div>
-     {isUser? <UserList />: isOrganization? homeOrg() :inHome ? <Homepage/> :<Login />}
-    </div>
+    <>
+      {isLogin && <Login />}
+      {isHome && <Homepage />}
+      {isOrganization && organizationHomePage()}
+      {isUser && <UserList />}
+      {isAddOrg && <AddOrganization />}
+    </>
   );
 }
 
