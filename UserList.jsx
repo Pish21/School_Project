@@ -1,15 +1,14 @@
 import React, { useState } from "react";
+import AddUser from "./AddUser";
 import Homepage from "./Homepage";
 import Login from "./Login";
 import OrganizationList from "./Organization";
-
-
 
 function UserList() {
   const [inHome, setHome] = useState(false);
   const [isUser, setUser] = useState(true);
   const [isOrganization, setOrganization] = useState(false);
-  
+  const [isAdd, setAdd] = useState(false);
 
   const moveToHome = () => {
     setHome(true);
@@ -29,16 +28,23 @@ function UserList() {
     setUser(false);
   };
 
+  const addUser = () => {
+    setHome(false);
+    setOrganization(false);
+    setUser(false);
+    setAdd(true);
+  };
+
   const homeUser = () => {
     return (
       <div className="container mt-5">
         <div className="row align-items-center">
           <div
-            className="col-3 bg-secondary border border-1 border-dark border-bottom-0 text-center align-self-start pb-5 pt-2"
+            className="col-3 bg-secondary border border-1 border-dark border-bottom-0 text-center align-self-start pt-2"
             style={{ "--bs-bg-opacity": ".5" }}
           >
             <a
-              className="navbar-brand"
+              className="navbar-brand "
               href="#Goes back to the Homepage"
               onClick={moveToHome}
             >
@@ -56,11 +62,14 @@ function UserList() {
           >
             <div className="row align-items-center">
               <div className="col-9">
-                <h1 className="display-6 text-center text-black">
-                  Property Assessment Pro - List User
+                <h1
+                  className="display-6 text-center text-black"
+                  style={{ fontSize: "2rem" }}
+                >
+                  Property Assessment Pro (PAP) - List User
                 </h1>
               </div>
-              <div className="col-2 text-black">Dave Gibson</div>
+              <div className="col-2 text-black">Ayad Ismael</div>
               <div className="col-1">
                 <button
                   className="btn btn-primary btn-rou"
@@ -93,55 +102,70 @@ function UserList() {
         </div>
         <div className="row">
           <div
-            className="col-3 bg-secondary border border-1 border-dark border-top-0 border-bottom-0"
+            className="col-3 bg-secondary border border-1 border-dark border-top-0 border-bottom-0 "
             style={{ "--bs-bg-opacity": ".5" }}
           >
-            {/* <span className="userRole text-black">#userRole</span>
-              <div className="row ">
-                <a href="#" className="link-dark px-5">
-                  List User
-                </a>
-                <a href="#" className="link-dark px-5 text-nowrap">
-                  List Organization
-                </a>
-              </div> */}
+            <div className="row my-5">
+              <span className="userRole text-black ">#userRole</span>
+              <a href="#" class="link-dark px-5">
+                List User
+              </a>
+              <a
+                href="#"
+                class="link-dark px-5 text-nowrap"
+                onClick={moveToOrganization}
+              >
+                List Organization
+              </a>
+            </div>
           </div>
-          <div className="row">
-            <div
-              className="col-3 bg-secondary border border-1 border-dark border-top-0 border-bottom-0"
-              style={{ "--bs-bg-opacity": ".5" }}
-            >
-              <span className="userRole text-black">#userRole</span>
-              <div className="row ">
-                <a href="#" className="link-dark px-5">
-                  List User
-                </a>
-                <a
-                  href="#"
-                  className="link-dark px-5 text-nowrap"
-                  onClick={moveToOrganization}
-                >
-                  List Organization
-                </a>
+          <div
+            className="col-9 border-end border-1 border-dark "
+            style={{ height: "50vh", marginTop: "-1.7rem" }}
+          >
+            <div class="row mt-2">
+              <div className="col text-center text-black fw-bold">
+                First Name
               </div>
+              <div className="col text-center text-black fw-bold">
+                Middle Name
+              </div>
+              <div className="col text-center text-black fw-bold">
+                Last name
+              </div>
+              <div className="col text-center text-black fw-bold">Role</div>
+              <div className="col text-center text-black fw-bold">Status</div>
             </div>
-            <div
-              className="col-9 d-inline-flex"
-              style={{ height: "50vh", backgroundColor: "rgba(0,0,255,.1)" }}
-            >
-              ** User Information **
+            <div className="row justify-content-center">** Data **</div>
+          </div>
+        </div>
+        <div className="row justify-content-center">
+          <div
+            className="col-3 bg-secondary border border-0 border-dark border-top-0 "
+            style={{ "--bs-bg-opacity": ".5" }}
+          ></div>
+          <div className="col-9 border border-1 border-dark border-start-0 border-bottom-1">
+            <div className="bg-light">
+              <button
+                type="button"
+                class="btn btn-primary btn-sm my-2 ms-2"
+                onClick={addUser}
+              >
+                Add
+              </button>
             </div>
           </div>
-          <div className="row justify-content-center">
-            <div
-              className="col-3 bg-secondary border border-1 border-dark border-top-0"
-              style={{ "--bs-bg-opacity": ".5" }}
-            ></div>
-            <div className="col-9 bg-white border border-1 border-dark border-start-0">
-              <h2 className="text-center fs-6 fw-light">
-                Copyright © 2022 PAP. All rights reserved.
-              </h2>
-            </div>
+        </div>
+
+        <div className="row justify-content-center">
+          <div
+            className="col-3 bg-secondary border border-1 border-dark border-top-0 "
+            style={{ "--bs-bg-opacity": ".5" }}
+          ></div>
+          <div className="col-9 bg-white border border-1 border-dark border-start-0 border-top-0">
+            <h2 className=" text-center fs-6 fw-light  ">
+              Copyright Â© 2022 PAP. All rights reserved.
+            </h2>
           </div>
         </div>
       </div>
@@ -150,9 +174,19 @@ function UserList() {
 
   return (
     <div>
-
-      {isUser ? (homeUser() ) : isOrganization ? (<OrganizationList />) : inHome ? (<Homepage /> ) : ( <Login />  )}
-      
-      </div> );}
+      {isUser ? (
+        homeUser()
+      ) : isOrganization ? (
+        <OrganizationList />
+      ) : inHome ? (
+        <Homepage />
+      ) : isAdd ? (
+        <AddUser />
+      ) : (
+        <Login />
+      )}
+    </div>
+  );
+}
 
 export default UserList;
