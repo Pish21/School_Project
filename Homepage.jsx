@@ -108,6 +108,7 @@ function Homepage() {
                   className="link-dark px-5 text-nowrap"
                   onClick={moveToOrganization}
                 >
+                  {" "}
                   List Organization
                 </a>
               </div>
@@ -151,4 +152,3 @@ function Homepage() {
 }
 
 export default Homepage;
-
