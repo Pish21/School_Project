@@ -1,14 +1,14 @@
-
 import React, { useState } from "react";
 import Homepage from "./Homepage";
 import Login from "./Login";
 import UserList from "./UserList";
+import Organization from "./Organization";
 
 function AddUser() {
-  const [inHome, setHome] = useState(false);
+  const [isHome, setHome] = useState(false);
   const [isUser, setUser] = useState(false);
   const [isOrganization, setOrganization] = useState(false);
-  const [isAdd, setAdd] = useState(true);
+  const [isAddUser, setAdd] = useState(true);
   const [isLogin, setLogin] = useState(false);
   var message = "{Message}"; // this var is to wrap the Message work with curly braces
 
@@ -42,7 +42,32 @@ function AddUser() {
     setLogin(true);
   };
 
-  const addUserDisply = () => {
+  const addUser = () => {
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      const form = document.getElementById("addUser");
+      const formData = new FormData(form);
+
+      // call API to add organization
+      // Note: Once the API is added - we should add onClick={handleSubmit} within the (save) button
+
+      // if successful, redirect to organization list page
+      const isFormSubmittedSuccessfully = true; // replace with your API call to add organization
+      if (isFormSubmittedSuccessfully) {
+        alert("Information submitted successfully!");
+
+        setAdd(false);
+        setUser(true);
+        // window.location.href = "/user-list"; // replace with your user list page URL
+      } else {
+        // if error, display message and set focus on Name textbox
+        const nameInput = document.getElementById("firstName");
+        nameInput.focus();
+        const errorMessage = document.getElementById("errorMessage");
+        errorMessage.style.display = "block";
+      }
+    };
+
     return (
       <div className="container mt-5">
         <div className="row align-items-center">
@@ -128,7 +153,7 @@ function AddUser() {
             style={{ marginTop: "-1.7rem" }}
           >
             <div className="row mt-2 border-bottom border-dark">
-              <p>{message}</p>
+              <p className="text-danger">{message}</p>
             </div>
             <div class="row mt-1">
               <p>
@@ -183,27 +208,36 @@ function AddUser() {
                   <label htmlFor="role" className="form-label fw-bold">
                     <span className="text-danger fw-bold">*</span>Role
                   </label>
-                  <input
-                    type="text"
+                  <select
+                    className="form-select"
+                    aria-label="Default select example"
                     id="role"
-                    className="form-control"
-                    aria-label="Last name"
-                  />
+                    required
+                  >
+                    <option selected></option>
+                    <option value="1">option 1</option>
+                    <option value="2">option 2</option>
+                    <option value="3">option 3</option>
+                  </select>
                 </div>
               </div>
               <div className="row my-2">
                 <div className="col">
                   <label htmlFor="mobileCode" className="form-label fw-bold">
-                    <span className="text-danger fw-bold">*</span>Mobile Phone
+                    <span className="text-danger fw-bold">*</span>
                     Country Code
                   </label>
-                  <input
-                    type="number"
-                    id="mobileCode"
-                    className="form-control"
-                    aria-label="Mobile Code"
+                  <select
+                    className="form-select"
+                    aria-label="Default select example"
+                    id="CountryCode"
                     required
-                  />
+                  >
+                    <option selected></option>
+                    <option value="1">option 1</option>
+                    <option value="2">option 2</option>
+                    <option value="3">option 3</option>
+                  </select>
                 </div>
                 <div className="col">
                   <label htmlFor="mobilePhone" className="form-label fw-bold">
@@ -222,44 +256,20 @@ function AddUser() {
               </div>
               <div className="row my-2">
                 <div className="col">
-                <label for="workCode" class="form-label fw-bold">Work Phone Country Code</label>
-                  <input
-                    type="number"
-                    id="workCode"
-                    className="form-control"
-                    aria-label="First name"
-                  />
-                </div>
-                <div className="col">
-                  <label htmlFor="workPhone" className="form-label fw-bold">
+                  <label htmlFor="workCode" className="form-label fw-bold">
                     Work Phone
                   </label>
                   <input
                     type="tel"
                     placeholder="xxx-xxx-xxxx"
                     pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-                    id="workPhone"
+                    id="mobilePhone"
                     className="form-control"
-                    aria-label="Last name"
+                    aria-label="workPhone"
+                    required
                   />
                 </div>
-              </div>
 
-              <div className="row">
-                <div className="col">
-                  <label htmlFor="homeCode" className="form-label fw-bold">
-                    {" "}
-                    Home Phone Country Code
-                  </label>
-                  <input
-                    type="tel"
-                    placeholder="xxx-xxx-xxxx"
-                    pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-                    id="homePhone"
-                    className="form-control"
-                    aria-label="Last name"
-                  />
-                </div>
                 <div className="col">
                   <label htmlFor="workPhone" className="form-label fw-bold">
                     Home Phone
@@ -275,6 +285,28 @@ function AddUser() {
                 </div>
               </div>
 
+              {/* <div className="row">
+                <div className="col">
+                  <label htmlFor="homeCode" className="form-label fw-bold">
+                    {" "}
+                    Home Phone Country Code
+                  </label>
+                  <select
+                    className="form-select"
+                    aria-label="Default select example"
+                    id="HomePhoneCountryCode"
+                    required
+                  >
+                    <option selected></option>
+                    <option value="1">option 1</option>
+                    <option value="2">option 2</option>
+                    <option value="3">option 3</option>
+                  </select>
+                </div>
+
+               
+              </div> */}
+
               <div className="row my-2 mb-5 ">
                 <div className="col-6">
                   <label htmlFor="email" className="form-label fw-bold">
@@ -285,7 +317,7 @@ function AddUser() {
                     placeholder="email@example.com"
                     id="email"
                     className="form-control"
-                    aria-label="Email"
+                    aria-label="Email Address"
                     required
                   />
                 </div>
@@ -295,8 +327,12 @@ function AddUser() {
                 style={{ backgroundColor: "lightgray" }}
               >
                 <div className="col-12">
-                  <button className="btn btn-primary mx-1">Save</button>
-                  <button className="btn btn-primary mx-1">Cancel</button>
+                  <button className="btn btn-primary mx-1" type="submit">
+                    Save
+                  </button>
+                  <button className="btn btn-primary mx-1" onClick={moveToUser}>
+                    Cancel
+                  </button>
                 </div>
               </div>
             </form>
@@ -320,19 +356,13 @@ function AddUser() {
   };
 
   return (
-    <div>
-      {isAdd ? (
-        addUserDisply()
-      ) : isUser ? (
-        <UserList />
-      ) : isOrganization ? (
-        <isOrganization />
-      ) : inHome ? (
-        <Homepage />
-      ) : (
-        <Login />
-      )}
-    </div>
+    <>
+      {isLogin && <Login />}
+      {isHome && <Homepage />}
+      {isOrganization && <Organization />}
+      {isUser && <UserList />}
+      {isAddUser && addUser()}
+    </>
   );
 }
 
