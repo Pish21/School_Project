@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import Login from "./Login";
 import Homepage from "./Homepage";
@@ -24,6 +23,7 @@ function AddOrganization() {
     setOrganization(true);
     setUser(false);
     setHome(false);
+    setAddOrg(false);
   };
 
   const logOff = () => {
@@ -42,6 +42,31 @@ function AddOrganization() {
   };
 
   const addOrganization = () => {
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      const form = document.getElementById("addOrganization");
+      const formData = new FormData(form);
+
+      // call API to add organization
+      // Note: Once the API is added - we should add onClick={handleSubmit} within the (save) button
+
+      // if successful, redirect to organization list page
+      const isFormSubmittedSuccessfully = true; // replace with your API call to add organization
+      if (isFormSubmittedSuccessfully) {
+        alert("Information submitted successfully!");
+
+        setAddOrg(false);
+        setOrganization(true);
+        // window.location.href = "/organization-list"; // replace with your organization list page URL
+      } else {
+        // if error, display message and set focus on Name textbox
+        const nameInput = document.getElementById("name");
+        nameInput.focus();
+        const errorMessage = document.getElementById("errorMessage");
+        errorMessage.style.display = "block";
+      }
+    };
+
     return (
       <div className="container mt-5">
         <div className="row align-items-center">
@@ -116,7 +141,11 @@ function AddOrganization() {
               <a href="#" className="link-dark px-5" onClick={moveToUser}>
                 List User
               </a>
-              <a href="#" className="link-dark px-5 text-nowrap">
+              <a
+                href="#"
+                className="link-dark px-5 text-nowrap"
+                onClick={moveToOrganization}
+              >
                 List Organization
               </a>
             </div>
@@ -126,7 +155,7 @@ function AddOrganization() {
             style={{ marginTop: "-1.7rem" }}
           >
             <div className="row mt-2 border-bottom border-dark">
-              <p>{message}</p>
+              <p className="text-danger">{message}</p>
             </div>
             <div class="row mt-1">
               <p>
@@ -135,58 +164,60 @@ function AddOrganization() {
             </div>
             <form
               className="d-inline"
-              id="addUser"
+              id="addOrganization"
               method="get"
               action="./somewhere"
             >
               <div className="row ">
                 <div className="col">
-                  <label htmlFor="firstName" className="form-label fw-bold">
+                  <label htmlFor="Name" className="form-label fw-bold">
                     <span className="text-danger fw-bold">*</span>Name
                   </label>
                   <input
                     type="text"
                     className="form-control"
-                    aria-label="First name"
-                    id="firstName"
+                    aria-label="Organization Name"
+                    id="name"
                     required
                   />
                 </div>
                 <div className="col">
-                  <label htmlFor="middleName" className="form-label fw-bold">
+                  <label htmlFor="address1" className="form-label fw-bold">
                     <span className="text-danger fw-bold">*</span>
                     Address 1
                   </label>
                   <input
                     type="text"
-                    id="middleName"
+                    id="address1"
                     className="form-control"
-                    aria-label="Middle name"
+                    aria-label="Address 1"
+                    required
                   />
                 </div>
               </div>
               <div className="row my-2">
                 <div className="col">
-                  <label htmlFor="lastName" className="form-label fw-bold">
+                  <label htmlFor="address2" className="form-label fw-bold">
                     <span className="text-danger fw-bold">*</span>Address 2
                   </label>
                   <input
                     type="text"
-                    id="lastName"
+                    id="address2"
                     className="form-control"
-                    aria-label="Last name"
+                    aria-label="Address 2"
                     required
                   />
                 </div>
                 <div className="col">
-                  <label htmlFor="role" className="form-label fw-bold">
+                  <label htmlFor="address3" className="form-label fw-bold">
                     <span className="text-danger fw-bold">*</span>Address 3
                   </label>
                   <input
                     type="text"
-                    id="role"
+                    id="address3"
                     className="form-control"
-                    aria-label="Last name"
+                    aria-label="Address 3"
+                    required
                   />
                 </div>
               </div>
@@ -198,16 +229,20 @@ function AddOrganization() {
                   <input type="text" className="form-control" required />
                 </div>
                 <div className="col">
-                  <label className="form-label fw-bold">
+                  <label htmlFor="state" className="form-label fw-bold">
                     <span className="text-danger fw-bold">*</span>State
                   </label>
-                  <input
-                    type="number"
-                    id="mobileCode"
-                    className="form-control"
-                    aria-label="Mobile Code"
+                  <select
+                    className="form-select"
+                    aria-label="State"
+                    id="state"
                     required
-                  />
+                  >
+                    <option selected></option>
+                    <option value="1">TX</option>
+                    <option value="2">UT</option>
+                    <option value="3">VT</option>
+                  </select>
                 </div>
               </div>
               <div className="row my-2">
@@ -217,10 +252,11 @@ function AddOrganization() {
                     Postal Code
                   </label>
                   <input
-                    type="number"
-                    id="workCode"
+                    type="text"
+                    id="role"
                     className="form-control"
-                    aria-label="First name"
+                    aria-label="PostalCode"
+                    required
                   />
                 </div>
                 <div className="col">
@@ -248,7 +284,6 @@ function AddOrganization() {
                     className="form-control"
                     aria-label="Middle name"
                     id="middleName"
-                    required
                   />
                 </div>
                 <div className="col">
@@ -268,20 +303,24 @@ function AddOrganization() {
 
               <div className="row">
                 <div className="col">
-                  <label htmlFor="mobileCode" className="form-label fw-bold">
-                    <span className="text-danger fw-bold">*</span>Mobile Phone
-                    Country Code
+                  <label htmlFor="CountryCode" className="form-label fw-bold">
+                    <span className="text-danger fw-bold">*</span>Country Code
                   </label>
-                  <input
-                    type="number"
-                    id="mobileCode"
-                    className="form-control"
-                    aria-label="Mobile Code"
+                  <select
+                    className="form-select"
+                    aria-label="Default select example"
+                    id="CountryCode"
                     required
-                  />
+                  >
+                    <option selected></option>
+                    <option value="1">option 1</option>
+                    <option value="2">option 2</option>
+                    <option value="3">option 3</option>
+                  </select>
                 </div>
+
                 <div className="col">
-                  <label htmlFor="workPhone" className="form-label fw-bold">
+                  <label htmlFor="mobilePhone" className="form-label fw-bold">
                     <span className="text-danger fw-bold">*</span>
                     Mobile Phone
                   </label>
@@ -289,81 +328,78 @@ function AddOrganization() {
                     type="tel"
                     placeholder="xxx-xxx-xxxx"
                     pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-                    id="workPhone"
+                    id="mobilePhone"
                     className="form-control"
-                    aria-label="Last name"
+                    aria-label="Mobile Phone"
+                    required
                   />
                 </div>
               </div>
               <div className="row">
-                <div className="col">
-                  <label htmlFor="workCode" className="form-label fw-bold">
-                    Work Phone Country Code
-                  </label>
-                  <input
-                    type="number"
-                    id="mobileCode"
-                    className="form-control"
-                    aria-label="Mobile Code"
-                    required
-                  />
-                </div>
                 <div className="col">
                   <label htmlFor="workPhone" className="form-label fw-bold">
                     Work Phone
                   </label>
-                  <input
-                    type="tel"
-                    placeholder="xxx-xxx-xxxx"
-                    pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-                    id="workPhone"
-                    className="form-control"
-                    aria-label="Last name"
-                  />
-                </div>
-              </div>
-              <div className="row">
-                <div className="col">
-                  <label htmlFor="homeCode" className="form-label fw-bold">
-                    {" "}
-                    Home Phone Country Code
-                  </label>
-                  <input
-                    type="number"
-                    id="mobileCode"
-                    className="form-control"
-                    aria-label="Mobile Code"
-                    required
-                  />
+                  <select
+                    className="form-select"
+                    aria-label="Default select example"
+                  >
+                    <option selected></option>
+                    <option value="1">option 1</option>
+                    <option value="2">option 2</option>
+                    <option value="3">option 3</option>
+                  </select>
                 </div>
                 <div className="col">
-                  <label htmlFor="workPhone" className="form-label fw-bold">
+                  <label htmlFor="HomePhone" className="form-label fw-bold">
                     Home Phone
                   </label>
                   <input
                     type="tel"
                     placeholder="xxx-xxx-xxxx"
                     pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-                    id="workPhone"
+                    id="homePhone"
                     className="form-control"
-                    aria-label="Last name"
+                    aria-label="Home Phone"
                   />
                 </div>
               </div>
+              {/* <div className="row">
+                <div className="col">
+                  <label
+                    htmlFor="homePhoneCountryCode"
+                    className="form-label fw-bold"
+                  >
+                    {" "}
+                    Home Phone Country Code
+                  </label>
+                  <select
+                    className="form-select"
+                    aria-label="Default select example"
+                  >
+                    <option selected>Open this select menu</option>
+                    <option value="1">option 1</option>
+                    <option value="2">option 2</option>
+                    <option value="3">option 3</option>
+                  </select>
+                </div>
+               
+              </div> */}
 
               <div className="row my-2 mb-5 ">
                 <div className="col-6">
                   <label htmlFor="email" className="form-label fw-bold">
                     <span className="text-danger fw-bold">*</span>Email Address
                   </label>
-                  <input
-                    type="email"
-                    placeholder="email@example.com"
-                    id="email"
-                    className="form-control"
-                    aria-label="Email"
-                    required
-                  />
+                  <select
+                    className="form-select"
+                    aria-label="Default select example"
+                  >
+                    <option selected></option>
+                    <option value="1">option 1</option>
+                    <option value="2">option 2</option>
+                    <option value="3">option 3</option>
+                  </select>
                 </div>
               </div>
               <div
@@ -371,8 +407,15 @@ function AddOrganization() {
                 style={{ backgroundColor: "lightgray" }}
               >
                 <div className="col-12">
-                  <button className="btn btn-primary mx-1">Save</button>
-                  <button className="btn btn-primary mx-1">Cancel</button>
+                  <button className="btn btn-primary mx-1" type="submit">
+                    Save
+                  </button>
+                  <button
+                    className="btn btn-primary mx-1"
+                    onClick={moveToOrganization}
+                  >
+                    Cancel
+                  </button>
                 </div>
               </div>
             </form>
@@ -396,19 +439,13 @@ function AddOrganization() {
   };
 
   return (
-    <div>
-      {isAddOrg ? (
-        addOrganization()
-      ) : isHome ? (
-        <Homepage />
-      ) : isOrganization ? (
-        <OrganizationList />
-      ) : isUser ? (
-        <UserList />
-      ) : (
-        <Login />
-      )}
-    </div>
+    <>
+      {isLogin && <Login />}
+      {isHome && <Homepage />}
+      {isOrganization && <OrganizationList />}
+      {isUser && <UserList />}
+      {isAddOrg && addOrganization()}
+    </>
   );
 }
 
