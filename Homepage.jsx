@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import Login from "./Login";
 import OrganizationList from "./Organization";
 import UserList from "./UserList";
+import { useAuth0 } from "@auth0/auth0-react";
 
 function Homepage() {
   const [inHome, setHome] = useState(true);
   const [isUser, setUser] = useState(false);
   const [isOrganization, setOrganization] = useState(false);
+  const { user, isAuthenticated, logout } = useAuth0();
 
   const moveToUser = () => {
     setUser(true);
@@ -14,10 +16,6 @@ function Homepage() {
 
   const moveToOrganization = () => {
     setOrganization(true);
-  };
-
-  const logOff = () => {
-    setHome(false);
   };
 
   const home = () => {
@@ -47,7 +45,9 @@ function Homepage() {
                   Property Assessment Pro
                 </h1>
               </div>
-              <div className="col-2 text-black">Ismail Baysal</div>
+              <div className="col-2 text-black">
+                {isAuthenticated && (user["given_name"] || user["nickname"])}
+              </div>
               <div className="col-1">
                 <button
                   className="btn btn-primary btn-rou"
@@ -60,7 +60,7 @@ function Homepage() {
                     "--bs-btn-padding-x": ".5rem",
                     "--bs-btn-font-size": "1rem"
                   }}
-                  onClick={logOff}
+                  onClick={logout}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

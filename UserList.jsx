@@ -3,12 +3,14 @@ import AddUser from "./AddUser";
 import Homepage from "./Homepage";
 import Login from "./Login";
 import OrganizationList from "./Organization";
+import { useAuth0 } from "@auth0/auth0-react";
 
 function UserList() {
   const [inHome, setHome] = useState(false);
   const [isUser, setUser] = useState(true);
   const [isOrganization, setOrganization] = useState(false);
   const [isAdd, setAdd] = useState(false);
+  const { user, isAuthenticated, logout } = useAuth0();
 
   const moveToHome = () => {
     setHome(true);
@@ -69,7 +71,9 @@ function UserList() {
                   Property Assessment Pro (PAP) - List User
                 </h1>
               </div>
-              <div className="col-2 text-black">Ayad Ismael</div>
+              <div className="col-2 text-black">
+                {isAuthenticated && (user["given_name"] || user["nickname"])}
+              </div>
               <div className="col-1">
                 <button
                   className="btn btn-primary btn-rou"
@@ -82,7 +86,7 @@ function UserList() {
                     "--bs-btn-padding-x": ".5rem",
                     "--bs-btn-font-size": "1rem"
                   }}
-                  onClick={logOff}
+                  onClick={logout}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -190,4 +194,3 @@ function UserList() {
 }
 
 export default UserList;
- 
