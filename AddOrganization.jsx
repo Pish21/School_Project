@@ -3,6 +3,7 @@ import Login from "./Login";
 import Homepage from "./Homepage";
 import OrganizationList from "./Organization";
 import UserList from "./UserList";
+import { useAuth0 } from "@auth0/auth0-react";
 
 function AddOrganization() {
   const [isHome, setHome] = useState(false);
@@ -10,6 +11,7 @@ function AddOrganization() {
   const [isOrganization, setOrganization] = useState(false);
   const [isAddOrg, setAddOrg] = useState(true);
   const [isLogin, setLogin] = useState(false);
+  const { user, isAuthenticated, logout } = useAuth0();
   var message = "{Message}"; // this var is to wrap the Message work with curly braces
 
   const moveToHome = () => {
@@ -101,7 +103,9 @@ function AddOrganization() {
                   Property Assessment Pro (PAP) - Add Organization
                 </h1>
               </div>
-              <div className="col-2 text-black">Ismail Baysal</div>
+              <div className="col-2 text-black">
+                {isAuthenticated && (user["given_name"] || user["nickname"])}
+              </div>
               <div className="col-1">
                 <button
                   className="btn btn-primary btn-round"
@@ -113,7 +117,7 @@ function AddOrganization() {
                     "--bs-btn-padding-x": ".5rem",
                     "--bs-btn-font-size": "1rem"
                   }}
-                  onClick={logOff}
+                  onClick={logout}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

@@ -3,6 +3,7 @@ import AddOrganization from "./AddOrganization";
 import Homepage from "./Homepage";
 import Login from "./Login";
 import UserList from "./UserList";
+import { useAuth0 } from "@auth0/auth0-react";
 
 function OrganizationList() {
   const [isOrganization, setOrganization] = useState(true);
@@ -10,6 +11,7 @@ function OrganizationList() {
   const [isUser, setUser] = useState(false);
   const [isAddOrg, setAddOrg] = useState(false);
   const [isLogin, setLogin] = useState(false);
+  const { user, isAuthenticated, logout } = useAuth0();
 
   const moveToHome = () => {
     setHome(true);
@@ -77,7 +79,7 @@ function OrganizationList() {
                 </h1>
               </div>
               <div className="col-2 text-black">
-                <p> Ayad Ismael </p>
+                {isAuthenticated && (user["given_name"] || user["nickname"])}
               </div>
               <div className="col-1">
                 <button
@@ -90,7 +92,7 @@ function OrganizationList() {
                     "--bs-btn-padding-x": ".5rem",
                     "--bs-btn-font-size": "1rem"
                   }}
-                  onClick={logOff}
+                  onClick={logout}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -201,4 +203,3 @@ function OrganizationList() {
 }
 
 export default OrganizationList;
- 
